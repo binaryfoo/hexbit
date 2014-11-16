@@ -1,0 +1,9 @@
+name: hexbit
+version: 0.0.1
+description: Hex string to bit and back again
+dependencies:
+  collection: ">=0.9.1 <1.0.0"
+  quiver: '>=0.19.0<0.20.0'
+dev_dependencies:
+  unittest: any
+  matcher: any
