@@ -52,4 +52,17 @@ main() {
     expect(Bit.on(3, 2).toString(), equals("Byte 3 Bit 2 = 1"));
     expect(Bit.fromHex("01").where((bit) => bit.set).first.toString(), equals("Byte 1 Bit 1 = 1"));
   });
+
+  test("id", () {
+    expect(Bit.on(4, 2).id, equals("4-2-1"));
+    expect(Bit.off(3, 5).id, equals("3-5-0"));
+  });
+
+  test("absolute bit number", () {
+    expect(Bit.on(1, 1).absoluteBitNumber, equals(1));
+    expect(Bit.on(1, 4).absoluteBitNumber, equals(4));
+    expect(Bit.on(2, 4).absoluteBitNumber, equals(12));
+    expect(Bit.on(2, 1).absoluteBitNumber, equals(9));
+
+  });
 }

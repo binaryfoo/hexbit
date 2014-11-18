@@ -28,6 +28,8 @@ class Bit implements Comparable<Bit> {
 
   String get value => set ? "1" : "0";
 
+  int get absoluteBitNumber => (byteNumber - 1) * 8 + bitNumber;
+
   String toString() => toLabel(false);
 
   String toLabel(bool includeComma) {
@@ -38,6 +40,8 @@ class Bit implements Comparable<Bit> {
   bool operator ==(Bit other) {
     return byteNumber == other.byteNumber && bitNumber == other.bitNumber && set == other.set;
   }
+
+  String get id => "${byteNumber}-${bitNumber}-${value}";
 
   int get hashCode => hash3(byteNumber, bitNumber, set);
 
