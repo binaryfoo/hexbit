@@ -45,12 +45,12 @@ class Bit implements Comparable<Bit> {
 
   int get hashCode => hash3(byteNumber, bitNumber, set);
 
-  static BitSet fromHex(String string) {
+  static BitSet fromHex(String string, [int firstByte = 1]) {
     var set = new BitSet();
     var end = string.length - 1;
     for (var i = 0; i < end; i += 2) {
       var byte = int.parse(string.substring(i, i + 2), radix: 16);
-      var byteNumber = (i/2 + 1).toInt();
+      var byteNumber = (i/2 + 1).toInt() + firstByte - 1;
       for (var bitIndex = 7; bitIndex >= 0; bitIndex--) {
         set.add(new Bit(byteNumber, bitIndex + 1, (byte >> bitIndex) & 1 == 1));
       }

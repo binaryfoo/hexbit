@@ -23,6 +23,10 @@ main() {
     expect(Bit.fromHex("0000"), hasLength(16));
   });
 
+  test("From hex with optional first byte number", () {
+    expect(Bit.fromHex("ff", 3), contains(Bit.on(3, 1)));
+  });
+
   test("All bits set for FF", () {
     var set = Bit.fromHex("FF");
     for (var i = 1; i <= 8; ++i) {
