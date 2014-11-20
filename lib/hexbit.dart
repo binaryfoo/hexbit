@@ -15,7 +15,7 @@ class BitSet extends DelegatingList<Bit> {
     return index < length ? this[index] : null;
   }
 
-  int get byteCount => length ~/ 8;
+  int get byteCount => (length + 4) ~/ 8;
 }
 
 /**
@@ -50,13 +50,20 @@ class Bit implements Comparable<Bit> {
 
   static BitSet fromHex(String string, [int firstByte = 1]) {
     var set = new BitSet();
+    bool partial = string.length % 2 != 0;
+    if (partial) {
+      string += "0";
+    }
     var end = string.length - 1;
     for (var i = 0; i < end; i += 2) {
       var byte = int.parse(string.substring(i, i + 2), radix: 16);
-      var byteNumber = (i/2 + 1).toInt() + firstByte - 1;
+      var byteNumber = i~/2 + 1 + firstByte - 1;
       for (var bitIndex = 7; bitIndex >= 0; bitIndex--) {
         set.add(new Bit(byteNumber, bitIndex + 1, (byte >> bitIndex) & 1 == 1));
       }
+    }
+    if (partial) {
+      set.removeRange(set.length - 4, set.length);
     }
     return set;
   }

@@ -27,6 +27,21 @@ main() {
     expect(Bit.fromHex("ff", 3), contains(Bit.on(3, 1)));
   });
 
+  test("From hex only a nibble", () {
+    var nibble = Bit.fromHex("9");
+    expect(nibble, hasLength(4));
+    expect(nibble, contains(Bit.on(1, 5)));
+    expect(nibble, contains(Bit.off(1, 6)));
+    expect(nibble, contains(Bit.off(1, 7)));
+    expect(nibble, contains(Bit.on(1, 8)));
+    expect(nibble.byteCount, equals(1));
+    expect(nibble.bit(1, 1), equals(null));
+    expect(nibble.bit(1, 5), equals(Bit.on(1, 5)));
+    expect(nibble.bit(1, 6), equals(Bit.off(1, 6)));
+    expect(nibble.bit(1, 7), equals(Bit.off(1, 7)));
+    expect(nibble.bit(1, 8), equals(Bit.on(1, 8)));
+  });
+
   test("All bits set for FF", () {
     var set = Bit.fromHex("FF");
     for (var i = 1; i <= 8; ++i) {
@@ -76,7 +91,11 @@ main() {
 
   test("byte count of bit set", () {
     expect(Bit.fromHex("").byteCount, equals(0));
+    expect(Bit.fromHex("1").byteCount, equals(1));
     expect(Bit.fromHex("11").byteCount, equals(1));
+    expect(Bit.fromHex("110").byteCount, equals(2));
+    expect(Bit.fromHex("1100").byteCount, equals(2));
+    expect(Bit.fromHex("11000").byteCount, equals(3));
     expect(Bit.fromHex("112233").byteCount, equals(3));
   });
 }
