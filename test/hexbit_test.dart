@@ -48,10 +48,6 @@ main() {
     expect(Bit.on(1, 1) == Bit.on(2, 1), equals(false));
   });
 
-  test("Set of bits should override ==", () {
-    expect(Bit.fromHex("ff") == Bit.fromHex("ff"), equals(true));
-  });
-
   test("toString()", () {
     expect(Bit.on(3, 2).toString(), equals("Byte 3 Bit 2 = 1"));
     expect(Bit.fromHex("01").where((bit) => bit.set).first.toString(), equals("Byte 1 Bit 1 = 1"));
@@ -67,6 +63,20 @@ main() {
     expect(Bit.on(1, 4).absoluteBitNumber, equals(4));
     expect(Bit.on(2, 4).absoluteBitNumber, equals(12));
     expect(Bit.on(2, 1).absoluteBitNumber, equals(9));
+  });
 
+  test("access bit in set via (byte,bit) numbers", () {
+    expect(Bit.fromHex("810042").bit(1, 8), equals(Bit.on(1, 8)));
+    expect(Bit.fromHex("810042").bit(1, 1), equals(Bit.on(1, 1)));
+    expect(Bit.fromHex("810042").bit(3, 1), equals(Bit.off(3, 1)));
+    expect(Bit.fromHex("810042").bit(3, 2), equals(Bit.on(3, 2)));
+    expect(Bit.fromHex("810042").bit(3, 7), equals(Bit.on(3, 7)));
+    expect(Bit.fromHex("810042").bit(3, 8), equals(Bit.off(3, 8)));
+  });
+
+  test("byte count of bit set", () {
+    expect(Bit.fromHex("").byteCount, equals(0));
+    expect(Bit.fromHex("11").byteCount, equals(1));
+    expect(Bit.fromHex("112233").byteCount, equals(3));
   });
 }

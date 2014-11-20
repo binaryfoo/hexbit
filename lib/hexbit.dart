@@ -1,18 +1,21 @@
 library hexbit;
 
-import 'dart:collection';
 import 'package:collection/collection.dart';
 import 'package:quiver/core.dart';
 
-class BitSet extends SplayTreeSet<Bit> {
+class BitSet extends DelegatingList<Bit> {
 
-  BitSet([Iterable<Bit> bits]) {
-    if (bits != null) {
-      addAll(bits);
-    }
+  BitSet() : super([]);
+
+  /**
+   * Both [byte] and [bit] start at 1.
+   */
+  Bit bit(int byte, int bit) {
+    var index = (byte - 1) * 8 + 8 - bit;
+    return index < length ? this[index] : null;
   }
 
-  bool operator ==(BitSet other) => const SetEquality().equals(this, other);
+  int get byteCount => length ~/ 8;
 }
 
 /**
