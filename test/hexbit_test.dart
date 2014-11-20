@@ -98,4 +98,18 @@ main() {
     expect(Bit.fromHex("11000").byteCount, equals(3));
     expect(Bit.fromHex("112233").byteCount, equals(3));
   });
+
+  test("value of byte in set", () {
+    expect(Bit.fromHex("00").byte(1), equals(0));
+    expect(Bit.fromHex("01").byte(1), equals(1));
+    expect(Bit.fromHex("80").byte(1), equals(128));
+    expect(Bit.fromHex("42").byte(1), equals(66));
+    expect(Bit.fromHex("42").byte(1), equals(66));
+    expect(Bit.fromHex("4200").byte(2), equals(0));
+    expect(Bit.fromHex("42FF").byte(2), equals(255));
+    expect(Bit.fromHex("000F").byte(2), equals(15));
+    expect(Bit.fromHex("000004").byte(3), equals(4));
+    expect(Bit.fromHex("001").byte(2), equals(16));
+    expect(Bit.fromHex("00F").byte(2), equals(240));
+  });
 }

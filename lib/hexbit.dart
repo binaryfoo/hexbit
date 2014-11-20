@@ -15,6 +15,19 @@ class BitSet extends DelegatingList<Bit> {
     return index < length ? this[index] : null;
   }
 
+  int byte(int byte) {
+    var highBit = (byte - 1) * 8;
+    var lowBit = highBit + 7;
+    var value = 0;
+    for (var i = highBit; i <= lowBit && i < length; i++) {
+      bool bit = this[i].set;
+      if (this[i].set) {
+        value += (1 << (7 - (i - highBit)));
+      }
+    }
+    return value;
+  }
+
   int get byteCount => (length + 4) ~/ 8;
 }
 
