@@ -1,5 +1,5 @@
 class Math {
-  static add(String char, num n) {
+  static String add(String char, int n) {
     int val = int.parse(char, radix: 16);
     val += n;
     if (val > 15) {
